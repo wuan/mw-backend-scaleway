@@ -1,0 +1,67 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - unattended-upgrades
+  - python-is-python3
+  - python3-pip
+fs_setup:
+  - device: '/dev/vdb'
+    partition: none
+    filesystem: 'ext4'
+mounts:
+  - [ vdb, /srv ]
+users:
+  - name: mw_mailbox
+    homedir: /srv/mailbox
+    gecos: Magic Wormhole Mailbox Service
+    lock_passwd: true
+  - name: mw_transitrelay
+    homedir: /srv/transitrelay
+    gecos: Magic Wormhole Transit-Relay Service
+    lock_passwd: true
+write_files:
+  - content: |
+      [ Unit ]
+      Description=MagicWormhole Transit-Relay Server
+      After=network.target
+      
+      [Service]
+      Type=exec
+      User=mw_transitrelay
+      ExecStart=/usr/bin/twist3 transitrelay --port=tcp:4001 --websocket=tcp:4002
+      WorkingDirectory=/srv/transitrelay
+      TimeoutSec=200
+      LimitNOFILE=4096
+      LimitNPROC=4096
+      
+      [Install]
+      WantedBy=multi-user.target
+    owner: root:root
+    path: /etc/systemd/system/magic-wormhole-transit-relay.service
+  - content: |
+      [ Unit ]
+      Description=MagicWormhole Mailbox Server
+      After=network.target
+      
+      [Service]
+      Type=exec
+      User=mw_mailbox
+      ExecStart=/usr/bin/twist3 wormhole-mailbox
+      WorkingDirectory=/srv/mailbox
+      TimeoutSec=200
+      LimitNOFILE=4096
+      LimitNPROC=4096
+      
+      [Install]
+      WantedBy=multi-user.target
+    owner: root:root
+    path: /etc/systemd/system/magic-wormhole-mailbox.service
+runcmd:
+  - pip install git+https://github.com/magic-wormhole/magic-wormhole-mailbox-server.git
+  - pip install git+https://github.com/magic-wormhole/magic-wormhole-transit-relay.git#egg=magic-wormhole-transit-relay
+  - systemctl daemon-reload
+  - systemctl enable magic-wormhole-transit-relay
+  - service magic-wormhole-transit-relay start
+  - systemctl enable magic-wormhole-mailbox
+  - service magic-wormhole-mailbox start

@@ -1,0 +1,25 @@
+= mw-backend-scaleway
+
+A Terraform based Magic Wormhole backend deployment on Scaleway infrastructure
+
+== Prerequisites
+
+* A Scaleway account
+* The desired base domain name needs to be registered within the Scaleway project (see link:https://www.scaleway.com/en/docs/network/dns-cloud/quickstart/[their documentation])
+* Environment Variables
++
+[source,shell]
+----
+export SCW_ACCESS_KEY=<Scaleway acccess key>
+export SCW_SECRET_KEY=<Scaleway secret key>
+# required for the S3 state storage
+export AWS_ACCESS_KEY=<Scaleway acccess key>
+export AWS_SECRET_KEY=<Scaleway secret key>
+export SCW_DEFAULT_ORGANIZATION_ID=<Scaleway organization id>
+export SCW_DEFAULT_PROJECT_ID=<Scaleway project id>
+export TF_VAR_base_domain_name=<registered base domain name>
+----
+
+== Open issues
+
+* There is no state locking mechanism available for now when using Scaleway S3 for state storage.

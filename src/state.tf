@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Andreas Wuerl
+//
+// SPDX-License-Identifier: Apache-2.0
+
 terraform {
   backend "s3" {
     bucket                      = "mw-test-terraform-state"

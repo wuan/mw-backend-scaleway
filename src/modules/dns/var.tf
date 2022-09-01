@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Andreas Wuerl
+//
+// SPDX-License-Identifier: Apache-2.0
+
 variable "domain_name" {
   type = string
   description = "subdomain to be used"

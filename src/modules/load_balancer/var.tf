@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Andreas Wuerl
+//
+// SPDX-License-Identifier: Apache-2.0
+
 variable "balancer_ip_id" {
   type = string
   description = "IP address of the load balancer"

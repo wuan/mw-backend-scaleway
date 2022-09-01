@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2022 Andreas Wuerl
+//
+// SPDX-License-Identifier: Apache-2.0
+
+# Apache-2.0
+
 resource "scaleway_instance_ip" "backend_server" {
 }
 

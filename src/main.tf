@@ -5,6 +5,11 @@ resource "scaleway_lb_ip" "main" {
   zone = "fr-par-1"
 }
 
+#resource "scaleway_instance_ip_reverse_dns" "reverse" {
+#  ip_id   = scaleway_instance_ip.backend_server.id
+#  reverse = var.base_domain_name
+#}
+
 module "dns-setup" {
   source = "./modules/dns"
   domain_name = var.base_domain_name

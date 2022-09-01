@@ -8,11 +8,13 @@ terraform {
 }
 
 resource "scaleway_instance_volume" "data" {
+  name = "${var.prefix}magic-wormhole-data"
   size_in_gb = 40
   type       = "l_ssd"
 }
 
 resource "scaleway_instance_security_group" "server" {
+  name = "${var.prefix}magic-wormhole-backend"
   inbound_default_policy  = "drop"
   outbound_default_policy = "accept"
 
@@ -38,11 +40,11 @@ resource "scaleway_instance_security_group" "server" {
 }
 
 resource "scaleway_instance_server" "backend" {
-  name       = "magic-wormhole-backend"
+  name       = "${var.prefix}magic-wormhole-backend"
   type       = "DEV1-L"
   image      = "ubuntu_jammy"
 
-  tags = ["front", "web"]
+  tags = var.tags
 
   ip_id = var.public_ip_id
 
@@ -56,4 +58,3 @@ resource "scaleway_instance_server" "backend" {
   cloud_init        = file("${path.module}/cloud-init.yml")
   security_group_id = scaleway_instance_security_group.server.id
 }
-

@@ -22,3 +22,13 @@ variable "domain_name" {
   type = string
   description = "subdomain to be used"
 }
+
+variable "tags" {
+  default = []
+  description = "Tags to be applied to the created resources"
+}
+
+variable "prefix" {
+  default = ""
+  description = "name prefix for the created resources"
+}

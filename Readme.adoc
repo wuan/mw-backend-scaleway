@@ -2,6 +2,39 @@
 
 A Terraform based Magic Wormhole backend deployment on Scaleway infrastructure
 
+For the given _<Base domain name>_ the following services will be available:
+
+* On the public loadbalancer IP (resolved for `mailbox` and `relay` subdomains:
++
+
+|===
+|Port |Service
+
+|4000
+|Mailbox Service
+
+|4001
+|Relay Service
+
+|4002
+|Relay Service via WebSocket
+|===
+
+* via SSL/SNI
++
+
+|===
+|URL |Service
+
+|https://mailbox.<base domain name>/
+|Mailbox Service
+
+|https://relay.<base domain name>/
+|Relay Service via WebSocket
+|===
+
+* The `<base_domain_name>` resolves to the public ip of the backend server. This is currently used to allow SSH access to the backend server.
+
 == Prerequisites
 
 * A Scaleway account

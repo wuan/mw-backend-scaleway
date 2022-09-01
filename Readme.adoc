@@ -1,6 +1,6 @@
 = mw-backend-scaleway
 
-A Terraform based Magic Wormhole backend deployment on Scaleway infrastructure
+A Terraform based link:https://github.com/magic-wormhole[Magic Wormhole] backend deployment on link:https://www.scaleway.com/[Scaleway] infrastructure.
 
 For the given _<Base domain name>_ the following services will be available:
 
